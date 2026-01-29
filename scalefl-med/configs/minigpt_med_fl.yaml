@@ -1,0 +1,38 @@
+# configs/minigpt_med_fl.yaml
+
+# 模型配置
+model:
+  name: "minigpt_med"
+  model_config:
+    arch: "minigpt4"
+    model_type: "pretrain_vicuna"
+    freeze_vit: true
+    freeze_qformer: true
+  pretrained_path: "./checkpoints/minigpt4_med.pth"
+
+# 数据配置
+dataset:
+  name: "medical_fl"
+  data_root: "./data/medical_qa"
+  num_clients: 10
+  split_method: "iid"
+
+# 联邦学习配置
+federated:
+  algorithm: "fedavg_lora"
+  num_rounds: 50
+  num_clients_per_round: 5
+  local_epochs: 1
+  
+# 训练配置
+training:
+  batch_size: 2
+  lr: 1e-4
+  device: "cuda"
+
+# LoRA配置
+lora:
+  adaptive: true  # 自适应配置
+  r: 8           # 默认rank
+  alpha: 16
+  dropout: 0.1
